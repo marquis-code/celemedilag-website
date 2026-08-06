@@ -1,110 +1,80 @@
 <template>
-  <div>
-    <!-- Hero -->
-    <section class="bg-royalBlue text-white py-20">
-      <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Worship & Service Guides</h1>
-        <p class="text-lg md:text-xl font-light max-w-2xl mx-auto">Explore the detailed, simplified service guides and sacred hymns used by conductors and members of the Celestial Church of Christ.</p>
+  <div class="bg-ivory overflow-hidden">
+    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+      <HeroSection :settings="settings" pageKey="worship">
+        <template #fallback>
+          <img src="~/assets/image/hero_worship.png" alt="Worship" class="absolute min-w-full min-h-full object-cover" />
+        </template>
+      </HeroSection>
+      <div class="relative z-10 container mx-auto px-6 text-center max-w-4xl animate-fade-in-up">
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
+          <span class="text-sm font-medium text-white/90 tracking-wide">Worship & Service</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Worship & Service</h1>
+        <p class="text-lg text-white/70 max-w-xl mx-auto">Explore the detailed service guides and sacred hymns of the Celestial Church of Christ.</p>
       </div>
     </section>
 
-    <!-- Main Content -->
-    <section class="py-16 bg-gray-50">
-      <div class="container mx-auto px-6 max-w-5xl">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <section class="container mx-auto px-6 py-20">
+      <div v-if="pending" class="py-32 flex justify-center"><div class="h-12 w-12 border-4 border-cfTeal border-t-transparent rounded-full animate-spin"></div></div>
+
+      <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        
+        <!-- Order of Services -->
+        <div class="space-y-8">
+          <div>
+            <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
+              <span class="text-cfTeal text-sm font-semibold">Service Guide</span>
+            </div>
+            <h2 class="text-3xl font-display font-bold text-warmGray-900">Order of Services</h2>
+            <p class="text-warmGray-500 text-sm mt-2">Detailed step-by-step guides</p>
+          </div>
           
-          <!-- Order of Services -->
-          <div>
-            <div class="flex items-center mb-6">
-              <div class="w-12 h-12 bg-skyBlue rounded-lg flex items-center justify-center text-white mr-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          <div class="space-y-4">
+            <div v-if="!settings.worship_services?.length" class="text-warmGray-400 italic bg-white rounded-2xl p-8 border border-warmGray-100">No service guides available.</div>
+            <div v-for="(svc, index) in settings.worship_services" :key="index" class="bg-white p-6 rounded-2xl border border-warmGray-100 hover:border-cfTeal/20 hover:shadow-md transition-all duration-300 cursor-pointer group flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-cfTeal/10 flex items-center justify-center shrink-0 text-cfTeal font-bold text-sm group-hover:bg-cfTeal group-hover:text-white transition-colors">
+                {{ index + 1 }}
               </div>
-              <h2 class="text-3xl font-display font-bold text-royalBlue">Order of Services</h2>
-            </div>
-            <p class="text-gray-600 mb-6">Detailed, step-by-step guides for Service Conductors across various occasions.</p>
-            
-            <div class="space-y-4">
-              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-skyBlue transition group">
-                <h3 class="font-bold text-gray-800 group-hover:text-skyBlue">Order of Morning Service</h3>
-                <p class="text-sm text-gray-500">Daily at 6:00 AM</p>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-skyBlue transition group">
-                <h3 class="font-bold text-gray-800 group-hover:text-skyBlue">Order of Seekers Service</h3>
-                <p class="text-sm text-gray-500">Wednesday at 9:00 AM</p>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-skyBlue transition group">
-                <h3 class="font-bold text-gray-800 group-hover:text-skyBlue">Order of Service on Lord's Day</h3>
-                <p class="text-sm text-gray-500">Sunday Devotional Service at 10:00 AM</p>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-skyBlue transition group">
-                <h3 class="font-bold text-gray-800 group-hover:text-skyBlue">Order of Service for New Moon</h3>
-                <p class="text-sm text-gray-500">First Thursday of the month at 12 Midnight</p>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-skyBlue transition group">
-                <h3 class="font-bold text-gray-800 group-hover:text-skyBlue">Order of Service for Baby Christening</h3>
-                <p class="text-sm text-gray-500">Performed on the 8th day</p>
+              <div>
+                <h3 class="font-display font-bold text-lg text-warmGray-900 group-hover:text-cfTeal transition-colors mb-1">{{ svc.title }}</h3>
+                <p class="text-warmGray-500 leading-relaxed text-sm">{{ svc.subtitle }}</p>
               </div>
             </div>
-            
-            <button class="mt-6 text-royalBlue font-bold hover:underline flex items-center">
-              View All Services 
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
           </div>
-
-          <!-- Hymns -->
-          <div>
-            <div class="flex items-center mb-6">
-              <div class="w-12 h-12 bg-skyBlue rounded-lg flex items-center justify-center text-white mr-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
-              </div>
-              <h2 class="text-3xl font-display font-bold text-royalBlue">Sacred Hymns</h2>
-            </div>
-            <p class="text-gray-600 mb-6">A collection of divinely revealed hymns in Yoruba and English for our various rites and worships.</p>
-
-            <div class="space-y-4">
-              <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-bold text-gray-800">Hymn 1 (Processional)</h3>
-                  <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Yoruba / English</span>
-                </div>
-                <div class="text-gray-600 text-sm italic">
-                  "Jerih mo yah mah... Awon Angeli kun f'ayo lorun..."<br>
-                  "The host of Angels full of joy in heaven..."
-                </div>
-              </div>
-
-              <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-bold text-gray-800">Hymn 2 (Lighting Candles)</h3>
-                  <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Yoruba / English</span>
-                </div>
-                <div class="text-gray-600 text-sm italic">
-                  "Yah rah Sarah, Yah rah Samahtah..."<br>
-                  "Kindle the light, Divine from heaven above..."
-                </div>
-              </div>
-
-               <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-bold text-gray-800">Hymn 3 (Kneeling Down)</h3>
-                  <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Yoruba / English</span>
-                </div>
-                <div class="text-gray-600 text-sm italic">
-                  "Yah rah man, Hi Yah rah man..."<br>
-                  "Oh come unto the Lord..."
-                </div>
-              </div>
-            </div>
-
-            <button class="mt-6 text-royalBlue font-bold hover:underline flex items-center">
-              Browse Full Hymnal 
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-          </div>
-
         </div>
+
+        <!-- Hymns -->
+        <div class="space-y-8">
+          <div>
+            <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
+              <span class="text-cfGold text-sm font-semibold">Sacred Music</span>
+            </div>
+            <h2 class="text-3xl font-display font-bold text-warmGray-900">Sacred Hymns</h2>
+            <p class="text-warmGray-500 text-sm mt-2">Divinely revealed hymns in Yoruba & English</p>
+          </div>
+
+          <div class="space-y-4">
+            <div v-if="!settings.worship_hymns?.length" class="text-warmGray-400 italic bg-white rounded-2xl p-8 border border-warmGray-100">No hymns available.</div>
+            <div v-for="(hymn, index) in settings.worship_hymns" :key="index" class="bg-warmGray-900 text-white p-8 rounded-3xl group hover:shadow-xl hover:shadow-warmGray-900/20 transition-all duration-300 relative overflow-hidden">
+              <div class="absolute top-4 right-4">
+                <span class="bg-cfGold text-warmGray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">{{ hymn.category }}</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-cfTeal mb-4 pr-20">{{ hymn.title }}</h3>
+              <div class="text-warmGray-400 italic whitespace-pre-wrap leading-relaxed font-serif text-sm">
+                {{ hymn.lyrics }}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useSettings } from '~/composables/useSettings';
+
+const { settings, pending } = useSettings();
+</script>

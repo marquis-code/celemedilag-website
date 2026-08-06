@@ -1,56 +1,83 @@
 <template>
-  <div>
-    <!-- Hero -->
-    <section class="bg-royalBlue text-white py-20">
-      <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Blog & CELEMEDILAG Digest</h1>
-        <p class="text-lg md:text-xl font-light max-w-2xl mx-auto">Read devotionals, campus life updates, event reports, and our digital monthly publication.</p>
+  <div class="bg-ivory overflow-hidden">
+    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+      <HeroSection :settings="settings" pageKey="blog">
+        <template #fallback>
+          <img src="~/assets/image/hero_blog.png" alt="Blog" class="absolute min-w-full min-h-full object-cover" />
+        </template>
+      </HeroSection>
+      <div class="relative z-10 container mx-auto px-6 text-center max-w-4xl animate-fade-in-up">
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
+          <span class="text-sm font-medium text-white/90 tracking-wide">News & Blog</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">News & Blog</h1>
+        <p class="text-lg text-white/70 max-w-xl mx-auto">Stay updated with the latest news, announcements, and articles from the fellowship.</p>
       </div>
     </section>
 
-    <section class="py-16 bg-gray-50">
-      <div class="container mx-auto px-6">
-        
-        <!-- Categories -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-          <button @click="selectedCategory = ''" :class="['border border-gray-200 px-6 py-2 rounded-full text-sm font-medium transition', selectedCategory === '' ? 'bg-royalBlue text-white border-royalBlue' : 'bg-white hover:bg-skyBlue hover:text-white']">All</button>
-          <button @click="selectedCategory = 'Devotionals'" :class="['border border-gray-200 px-6 py-2 rounded-full text-sm font-medium transition', selectedCategory === 'Devotionals' ? 'bg-royalBlue text-white border-royalBlue' : 'bg-white hover:bg-skyBlue hover:text-white']">Devotionals</button>
-          <button @click="selectedCategory = 'Campus Life'" :class="['border border-gray-200 px-6 py-2 rounded-full text-sm font-medium transition', selectedCategory === 'Campus Life' ? 'bg-royalBlue text-white border-royalBlue' : 'bg-white hover:bg-skyBlue hover:text-white']">Campus Life</button>
-          <button @click="selectedCategory = 'Medical Missions'" :class="['border border-gray-200 px-6 py-2 rounded-full text-sm font-medium transition', selectedCategory === 'Medical Missions' ? 'bg-royalBlue text-white border-royalBlue' : 'bg-white hover:bg-skyBlue hover:text-white']">Medical Missions</button>
-          <button @click="selectedCategory = 'Fellowship News'" :class="['border border-gray-200 px-6 py-2 rounded-full text-sm font-medium transition', selectedCategory === 'Fellowship News' ? 'bg-royalBlue text-white border-royalBlue' : 'bg-white hover:bg-skyBlue hover:text-white']">Fellowship News</button>
-        </div>
+    <section class="container mx-auto px-6 py-20">
+      <div v-if="pending" class="py-32 flex justify-center"><div class="h-12 w-12 border-4 border-cfTeal border-t-transparent rounded-full animate-spin"></div></div>
 
-        <!-- Blog Grid -->
-        <div v-if="pending" class="text-center text-gray-500 py-12">Loading articles...</div>
-        <div v-else-if="error" class="text-center text-red-500 py-12">Error loading articles.</div>
-        <div v-else-if="filteredNews.length === 0" class="text-center text-gray-500 py-12">No articles found in this category.</div>
-        
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="article in filteredNews" :key="article._id" class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col">
-            <div class="p-6 flex-grow">
-              <span class="text-xs font-bold text-skyBlue uppercase tracking-wider mb-2 block">{{ article.category }}</span>
-              <h3 class="text-xl font-display font-bold text-royalBlue mb-3 leading-tight">{{ article.title }}</h3>
-              <p class="text-gray-600 mb-4 text-sm line-clamp-3">{{ article.content }}</p>
+      <div v-else-if="news.length === 0" class="text-center py-20 bg-white rounded-3xl border border-warmGray-100">
+        <p class="text-warmGray-400">No news articles published yet.</p>
+      </div>
+
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-for="article in news" :key="article._id" class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/5 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full border border-warmGray-100 group">
+          
+          <div class="h-56 relative overflow-hidden shrink-0">
+            <img 
+              :src="article.imageUrl || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80'" 
+              :alt="article.title" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+            <div class="absolute top-4 left-4">
+              <span class="bg-cfTeal text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">{{ article.category || 'News' }}</span>
             </div>
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
-              <span class="font-bold">By {{ article.author }}</span>
-              <span>{{ new Date(article.createdAt).toLocaleDateString() }}</span>
+          </div>
+          
+          <div class="p-7 flex-grow flex flex-col">
+            <p class="text-cfGold text-xs font-bold uppercase tracking-widest mb-3">
+              {{ new Date(article.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+            </p>
+            <h3 class="text-xl font-display font-bold text-warmGray-900 mb-3 group-hover:text-cfTeal transition-colors line-clamp-2">{{ article.title }}</h3>
+            <p class="text-warmGray-500 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">{{ article.content }}</p>
+            
+            <div class="pt-5 border-t border-warmGray-100 flex items-center">
+              <div class="w-9 h-9 rounded-full bg-warmGray-100 flex items-center justify-center text-warmGray-500 text-xs font-bold uppercase mr-3">
+                {{ article.author ? article.author.substring(0,2) : 'CM' }}
+              </div>
+              <p class="text-sm font-semibold text-warmGray-900">{{ article.author || 'CMUL Media' }}</p>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-const { data: news, pending, error } = await useFetch<any[]>('http://localhost:3001/api/news')
-const selectedCategory = ref('')
+import { ref, onMounted } from 'vue';
+import { useRuntimeConfig } from '#imports';
+import { useSettings } from '~/composables/useSettings';
 
-const filteredNews = computed(() => {
-  if (!news.value) return []
-  if (!selectedCategory.value) return news.value
-  return news.value.filter(n => n.category === selectedCategory.value)
-})
+const { settings } = useSettings();
+
+const pending = ref(true);
+const news = ref<any[]>([]);
+
+onMounted(async () => {
+  try {
+    const config = useRuntimeConfig();
+    const apiBase = config.public.apiBase || 'http://localhost:3005/api';
+    const res = await fetch(`${apiBase}/news`);
+    const json = await res.json();
+    news.value = json.data || json || [];
+  } catch (err) {
+    console.error('Failed to fetch news:', err);
+  } finally {
+    pending.value = false;
+  }
+});
 </script>

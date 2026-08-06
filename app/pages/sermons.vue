@@ -1,63 +1,101 @@
 <template>
-  <div>
-    <!-- Hero -->
-    <section class="bg-royalBlue text-white py-20">
-      <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Sermons & Resources</h1>
-        <p class="text-lg md:text-xl font-light max-w-2xl mx-auto">Listen to audio messages, watch video sermons, and download Bible study notes and teaching materials.</p>
+  <div class="bg-ivory overflow-hidden">
+    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+      <HeroSection :settings="settings" pageKey="sermons">
+        <template #fallback>
+          <img src="~/assets/image/hero_sermons.png" alt="Sermons" class="absolute min-w-full min-h-full object-cover" />
+        </template>
+      </HeroSection>
+      <div class="relative z-10 container mx-auto px-6 text-center max-w-4xl animate-fade-in-up">
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
+          <span class="text-sm font-medium text-white/90 tracking-wide">Sermons & Resources</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Sermons & Resources</h1>
+        <p class="text-lg text-white/70 max-w-xl mx-auto">Listen to life-transforming messages and teachings from our ministers.</p>
       </div>
     </section>
 
-    <section class="py-16 bg-white">
-      <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
-        
-        <div class="lg:col-span-2">
-          <h2 class="text-3xl font-display font-bold text-royalBlue mb-8">Recent Sermons</h2>
+    <section class="container mx-auto px-6 py-20">
+      <div v-if="pending" class="py-32 flex justify-center"><div class="h-12 w-12 border-4 border-cfTeal border-t-transparent rounded-full animate-spin"></div></div>
+
+      <div v-else-if="sermons.length === 0" class="text-center py-20 bg-white rounded-3xl border border-warmGray-100">
+        <p class="text-warmGray-400">No sermons have been uploaded yet.</p>
+      </div>
+
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-for="sermon in sermons" :key="sermon._id" class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/5 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full border border-warmGray-100 group">
           
-          <div class="space-y-6">
-            <div v-for="i in 4" :key="i" class="flex flex-col sm:flex-row bg-gray-50 rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-              <div class="sm:w-1/3 bg-gray-200 flex items-center justify-center p-8">
-                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="h-56 relative overflow-hidden shrink-0">
+            <img 
+              :src="sermon.thumbnailUrl || 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80'" 
+              :alt="sermon.title" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            
+            <!-- Play Icon -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <div class="w-16 h-16 bg-cfTeal/90 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white transform scale-75 group-hover:scale-100 transition-transform shadow-xl shadow-cfTeal/30">
+                <svg class="w-7 h-7 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
               </div>
-              <div class="p-6 sm:w-2/3 flex flex-col justify-center">
-                <h3 class="text-xl font-display font-bold text-royalBlue mb-2">The Power of His Resurrection</h3>
-                <p class="text-sm text-gray-500 mb-4">Pastor Anonymous • Sunday Service • Apr 9, 2023</p>
-                <div class="flex space-x-4">
-                  <button class="bg-royalBlue text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-skyBlue transition">Listen Audio</button>
-                  <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition">Watch Video</button>
-                </div>
+            </div>
+
+            <!-- Badges -->
+            <div class="absolute top-4 right-4">
+              <span class="bg-white/90 backdrop-blur-sm text-warmGray-700 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+                {{ sermon.type === 'video' ? 'Video' : 'Audio' }}
+              </span>
+            </div>
+            
+            <div class="absolute bottom-4 left-5">
+              <p class="text-cfGold text-xs font-bold uppercase tracking-widest drop-shadow-md">
+                {{ new Date(sermon.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
+              </p>
+            </div>
+          </div>
+          
+          <div class="p-7 flex-grow flex flex-col">
+            <h3 class="text-xl font-display font-bold text-warmGray-900 mb-2 line-clamp-2 group-hover:text-cfTeal transition-colors">{{ sermon.title }}</h3>
+            <p class="text-warmGray-500 text-sm mb-5 line-clamp-3 leading-relaxed flex-grow">{{ sermon.description }}</p>
+            
+            <div class="pt-5 border-t border-warmGray-100 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-warmGray-400 uppercase tracking-wider font-bold mb-0.5">Minister</p>
+                <p class="text-warmGray-900 font-semibold text-sm">{{ sermon.preacher }}</p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-warmGray-400 uppercase tracking-wider font-bold mb-0.5">Duration</p>
+                <p class="text-warmGray-900 font-medium text-sm">{{ sermon.duration || '--:--' }}</p>
               </div>
             </div>
           </div>
         </div>
-
-        <div>
-          <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 sticky top-24">
-            <h2 class="text-2xl font-display font-bold text-royalBlue mb-6">Resources & Downloads</h2>
-            <ul class="space-y-4">
-              <li>
-                <a href="#" class="flex items-center text-gray-700 hover:text-skyBlue transition">
-                  <svg class="w-5 h-5 mr-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                  <span>Bible Study Notes - Book of John</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="flex items-center text-gray-700 hover:text-skyBlue transition">
-                  <svg class="w-5 h-5 mr-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                  <span>Fellowship Constitution PDF</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="flex items-center text-gray-700 hover:text-skyBlue transition">
-                  <svg class="w-5 h-5 mr-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                  <span>Evangelism Tracts Template</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
       </div>
     </section>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useRuntimeConfig } from '#imports';
+import { useSettings } from '~/composables/useSettings';
+
+const { settings } = useSettings();
+
+const pending = ref(true);
+const sermons = ref<any[]>([]);
+
+onMounted(async () => {
+  try {
+    const config = useRuntimeConfig();
+    const apiBase = config.public.apiBase || 'http://localhost:3005/api';
+    const res = await fetch(`${apiBase}/sermons`);
+    const json = await res.json();
+    sermons.value = json.data || json || [];
+  } catch (err) {
+    console.error('Failed to fetch sermons:', err);
+  } finally {
+    pending.value = false;
+  }
+});
+</script>

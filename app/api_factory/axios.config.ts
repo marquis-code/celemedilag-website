@@ -1,0 +1,241 @@
+import axios, { type AxiosResponse } from "axios";
+// import { useUser } from "@/composables/auth/user";
+// import { useCustomToast } from "@/composables/core/useCustomToast";
+
+export const rawBaseUrl = (import.meta.env.VITE_BASE_URL as string)
+  || (import.meta.env.NUXT_PUBLIC_API_BASE as string)
+  || "http://127.0.0.1:3001";
+const $GATEWAY_ENDPOINT_WITHOUT_VERSION = rawBaseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/+$/, '');
+const $GATEWAY_ENDPOINT = `${$GATEWAY_ENDPOINT_WITHOUT_VERSION}/api`;
+const $IMAGE_UPLOAD_ENDPOINT = import.meta.env.VITE_IMAGE_UPLOAD_BASE_URL as string || "http://127.0.0.1:3001/api/upload";
+
+export const GATEWAY_ENDPOINT = axios.create({
+  baseURL: $GATEWAY_ENDPOINT,
+  withCredentials: true,
+  timeout: 15000,
+});
+
+export const GATEWAY_ENDPOINT_WITH_AUTH = axios.create({
+  baseURL: $GATEWAY_ENDPOINT,
+  withCredentials: true,
+});
+
+export const GATEWAY_ENDPOINT_WITH_AUTH_FORM_DATA = axios.create({
+  baseURL: $GATEWAY_ENDPOINT,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
+export const GATEWAY_ENDPOINT_WITHOUT_VERSION = axios.create({
+  baseURL: $GATEWAY_ENDPOINT_WITHOUT_VERSION,
+  withCredentials: true,
+});
+
+export const IMAGE_UPLOAD_ENDPOINT = axios.create({
+  baseURL: $IMAGE_UPLOAD_ENDPOINT,
+  withCredentials: true,
+});
+
+export interface CustomAxiosResponse extends AxiosResponse {
+  value?: any;
+  type?: string;
+}
+
+// ─── Refresh Token State Machine ──────────────────────────────────────────
+let isRefreshing = false;
+let failedQueue: Array<{
+    resolve: (token: string) => void;
+    reject: (error: any) => void;
+}> = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+    failedQueue.forEach((prom) => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token!);
+        }
+    });
+    failedQueue = [];
+};
+
+const getCookie = (name: string): string | null => {
+    if (typeof document === 'undefined') return null;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+    return null;
+};
+
+const setCookie = (name: string, value: string, maxAgeDays: number) => {
+    if (typeof document === 'undefined') return;
+    document.cookie = `${name}=${value}; path=/; max-age=${maxAgeDays * 86400}; SameSite=Lax`;
+};
+
+const AUTH_FLOW_PATTERN = /\/auth\/(login|verify-otp|register|resend-otp|forgot-password|reset-password|refresh)/;
+const CHAT_FLOW_PATTERN = /\/chat\/support/;
+
+const instanceArray = [
+  GATEWAY_ENDPOINT,
+  GATEWAY_ENDPOINT_WITH_AUTH,
+  GATEWAY_ENDPOINT_WITHOUT_VERSION,
+  GATEWAY_ENDPOINT_WITH_AUTH_FORM_DATA,
+  IMAGE_UPLOAD_ENDPOINT
+];
+
+// Request Interceptor for ALL instances to inject Accept-Language
+instanceArray.forEach((instance) => {
+  instance.interceptors.request.use((config: any) => {
+    const lang = getCookie('i18n_redirected') || 'en';
+    config.headers['Accept-Language'] = lang;
+    return config;
+  }, (error) => Promise.reject(error));
+});
+
+// Request Interceptor: Attach Token to Auth Instances
+const authInstanceArray = [
+  GATEWAY_ENDPOINT_WITH_AUTH,
+  GATEWAY_ENDPOINT_WITH_AUTH_FORM_DATA,
+  IMAGE_UPLOAD_ENDPOINT
+];
+
+authInstanceArray.forEach((instance) => {
+  instance.interceptors.request.use(
+    (config: any) => {
+      try {
+        // Only use if auth is implemented on frontend
+        // const { token } = useUser();
+        // const accessToken = token.value;
+        const accessToken = getCookie('accessToken');
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+      } catch {
+        // Nuxt context not yet available — proceed without auth header
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+});
+
+// Response Interceptor: 401 → Silent Refresh → Retry or Logout
+instanceArray.forEach((instance) => {
+  instance.interceptors.response.use(
+    (response: CustomAxiosResponse) => response,
+    async (err: any) => {
+      const originalRequest = err.config;
+
+      // Lazily access composables inside the callback where Nuxt context exists
+      let showToast: any = (opts: any) => console.log('Toast:', opts);
+      let logOut: any;
+      let isLoggedIn: any;
+
+      try {
+        const { useCustomToast } = await import('@/composables/core/useCustomToast');
+        const toast = useCustomToast();
+        showToast = toast.showToast;
+        
+        // Uncomment when user auth is implemented
+        // const { useUser } = await import('@/composables/auth/user');
+        // const user = useUser();
+        // logOut = user.logOut;
+        // isLoggedIn = user.isLoggedIn;
+      } catch (e) {
+        // No Nuxt context — just reject without toast
+        return Promise.reject(err);
+      }
+
+      if (!err.response) {
+        showToast({
+          title: "Connection Error",
+          message: "Unable to reach the server. Please check your internet connection.",
+          toastType: "error"
+        });
+        return Promise.reject(err);
+      }
+
+      const status = err.response.status;
+      const isAuthOrChatFlow = AUTH_FLOW_PATTERN.test(originalRequest.url || '') || CHAT_FLOW_PATTERN.test(originalRequest.url || '');
+      const isCheckoutFlow = typeof window !== 'undefined' && window.location.pathname.includes('/checkout');
+
+      // ── 401: Attempt Silent Refresh ─────────────────────────────────
+      if (status === 401 && !isAuthOrChatFlow && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        if (isRefreshing) {
+          // Queue this request until the active refresh completes
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          })
+            .then((newToken: any) => {
+              originalRequest.headers.Authorization = `Bearer ${newToken}`;
+              return instance(originalRequest);
+            })
+            .catch((queueErr) => Promise.reject(queueErr));
+        }
+
+        isRefreshing = true;
+
+        try {
+          const refreshToken = getCookie('refreshToken');
+          if (!refreshToken) throw new Error('No refresh token');
+
+          const refreshResponse = await axios.post(
+            `${$GATEWAY_ENDPOINT}/auth/refresh`,
+            { refreshToken },
+            {
+              withCredentials: true,
+              headers: { 'x-refresh-token': refreshToken },
+            }
+          );
+
+          const newAccessToken = refreshResponse.data?.accessToken || refreshResponse.data?.data?.accessToken;
+          const newRefreshToken = refreshResponse.data?.refreshToken || refreshResponse.data?.data?.refreshToken;
+
+          if (!newAccessToken) throw new Error('No token in refresh response');
+
+          setCookie('accessToken', newAccessToken, 7);
+          if (newRefreshToken) {
+            setCookie('refreshToken', newRefreshToken, 30);
+          }
+
+          console.log('[AxiosInterceptor] Token refreshed silently.');
+          processQueue(null, newAccessToken);
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return instance(originalRequest);
+
+        } catch (refreshError) {
+          console.error('[AxiosInterceptor] Refresh failed. Logging out.', refreshError);
+          processQueue(refreshError, null);
+          if (isLoggedIn?.value && logOut) {
+            logOut(!isCheckoutFlow);
+          }
+          return Promise.reject(refreshError);
+        } finally {
+          isRefreshing = false;
+        }
+      }
+
+      // ── Auth/Chat flow 401s — let component handle it ──────────────
+      if (status === 401 && isAuthOrChatFlow) {
+        console.warn(`[AxiosInterceptor] 401 ignored for ${originalRequest.url} (Auth/Chat Flow)`);
+        return Promise.reject(err);
+      }
+
+      // ── All other errors ───────────────────────────────────────────
+      if (!originalRequest.hideToast) {
+        const errorMessage = err.response.data?.message || err.response.data?.errors?.[0]?.message || "Something went wrong";
+        showToast({
+          title: "Request Error",
+          message: errorMessage,
+          toastType: "error"
+        });
+      }
+      return Promise.reject(err);
+    }
+  );
+});

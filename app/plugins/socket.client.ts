@@ -2,7 +2,10 @@ import { io } from 'socket.io-client';
 import { ref } from 'vue';
 
 export default defineNuxtPlugin(() => {
-  const socket = io('http://127.0.0.1:3001');
+  const config = useRuntimeConfig();
+  const baseUrl = (config.public.apiBase as string || '').replace('/api', '') || 'http://localhost:3005';
+  
+  const socket = io(baseUrl);
   
   // Create a reactive reference for the latest update
   const latestUpdate = ref<{ type: string, action: string, data: any, id?: string } | null>(null);

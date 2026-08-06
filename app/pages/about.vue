@@ -1,83 +1,97 @@
 <template>
-  <div>
-    <!-- Hero -->
-    <section class="bg-royalBlue text-white py-20">
-      <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">About CELEMEDILAG</h1>
-        <p class="text-lg md:text-xl font-light max-w-2xl mx-auto">Discover the rich history, tenets, and spiritual foundation of the Celestial Church of Christ.</p>
+  <div class="bg-ivory overflow-hidden">
+    <!-- Hero Section -->
+    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+      <HeroSection :settings="settings" pageKey="about">
+        <template #fallback>
+          <img src="~/assets/image/hero_about.png" alt="About Us" class="absolute min-w-full min-h-full object-cover" />
+        </template>
+      </HeroSection>
+      
+      <div class="relative z-10 container mx-auto px-6 text-center max-w-4xl animate-fade-in-up">
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
+          <span class="text-sm font-medium text-white/90 tracking-wide">About CELEMEDILAG</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Our Story</h1>
+        <p class="text-lg text-white/70 max-w-xl mx-auto">
+          Discover the rich history, tenets, and spiritual foundation of CELEMEDILAG.
+        </p>
       </div>
     </section>
 
-    <!-- Main Content -->
-    <section class="py-16 bg-white">
-      <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <!-- Main Content Layout -->
+    <section class="container mx-auto px-6 py-20">
+      <div v-if="pending" class="py-32 flex justify-center items-center">
+        <div class="flex flex-col items-center">
+          <div class="h-12 w-12 border-4 border-cfTeal border-t-transparent rounded-full animate-spin mb-4"></div>
+          <div class="text-warmGray-400 font-medium">Loading content...</div>
+        </div>
+      </div>
+      
+      <div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-14">
         <!-- Sidebar Navigation -->
-        <div class="lg:col-span-1">
-          <div class="sticky top-24 bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
-            <h3 class="font-bold text-lg mb-4 text-royalBlue border-b border-gray-200 pb-2">Contents</h3>
-            <ul class="space-y-3 font-medium text-gray-600">
-              <li><a href="#history" class="hover:text-skyBlue transition">Foundation History</a></li>
-              <li><a href="#tenets" class="hover:text-skyBlue transition">Tenets & Mode of Worship</a></li>
-              <li><a href="#sacraments" class="hover:text-skyBlue transition">Holy Rites & Sacraments</a></li>
-              <li><a href="#structure" class="hover:text-skyBlue transition">Church Structure</a></li>
+        <div class="lg:col-span-4 hidden lg:block">
+          <div class="sticky top-28 bg-white rounded-3xl shadow-sm border border-warmGray-100 p-8">
+            <h3 class="font-display font-bold text-lg mb-6 text-warmGray-900">Contents</h3>
+            <ul class="space-y-2">
+              <li><a href="#history" class="text-warmGray-500 hover:text-cfTeal hover:bg-cfTeal/5 transition-all px-4 py-2.5 rounded-xl flex items-center text-sm font-medium">Foundation History</a></li>
+              <li v-if="settings.about_tenets?.length"><a href="#tenets" class="text-warmGray-500 hover:text-cfTeal hover:bg-cfTeal/5 transition-all px-4 py-2.5 rounded-xl flex items-center text-sm font-medium">Tenets & Mode of Worship</a></li>
+              <li v-if="settings.about_rites?.length"><a href="#sacraments" class="text-warmGray-500 hover:text-cfTeal hover:bg-cfTeal/5 transition-all px-4 py-2.5 rounded-xl flex items-center text-sm font-medium">Holy Rites & Sacraments</a></li>
+              <li v-if="settings.about_churchStructure"><a href="#structure" class="text-warmGray-500 hover:text-cfTeal hover:bg-cfTeal/5 transition-all px-4 py-2.5 rounded-xl flex items-center text-sm font-medium">Church Structure</a></li>
             </ul>
           </div>
         </div>
 
         <!-- Content Area -->
-        <div class="lg:col-span-2 space-y-12">
+        <div class="lg:col-span-8 space-y-20">
           
-          <div id="history">
-            <h2 class="text-3xl font-display font-bold text-royalBlue mb-6">Foundation History & Divine Order</h2>
-            <div class="prose prose-lg text-gray-600 max-w-none">
-              <p>The Celestial Church of Christ is a united, indivisible Holy Church, which came into existence by DIVINE ORDER on the <strong>29th of September 1947</strong>, in Porto-Novo, Republic of Benin, through the Founder of the Church, the Reverend, Pastor, Prophet, Founder <strong>Samuel Bilehou Joseph Oshoffa</strong>.</p>
-              <p>On that fateful day, during prayer, a winged angel bathed in intense light appeared and said: <em>"Luli (meaning grace), it is the wish of God to send you on an errand of preaching to the world... To assist you in your work so that men may listen to and follow you, miraculous works of Holy divine healing will be carried out by you and in the name of Jesus Christ."</em></p>
-              <p>The name of the Church came by divine revelation through Mr. Alexander Yanga, who was held in a trance for seven days. He wrote the name of the church on the wall: <strong>EGLISE DU CHRISTIANISME CELESTE</strong> meaning "Celestial Church of Christ."</p>
+          <!-- History Section -->
+          <div id="history" class="scroll-mt-32">
+            <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
+              <span class="text-cfTeal text-sm font-semibold">Foundation</span>
             </div>
+            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Foundation History</h2>
+            <div class="prose prose-lg prose-warmGray max-w-none bg-white rounded-3xl p-8 md:p-10 border border-warmGray-100 shadow-sm" v-html="settings.about_foundationHistory || '<p class=\'italic text-warmGray-400\'>History content is being updated...</p>'"></div>
           </div>
 
-          <div id="tenets">
-            <h2 class="text-3xl font-display font-bold text-royalBlue mb-6">Tenets & Mode of Worship</h2>
-            <div class="bg-blue-50 border border-blue-100 p-6 rounded-xl">
-              <ul class="list-disc pl-5 space-y-3 text-gray-700">
-                <li>Members are forbidden to engage or participate in any form of idolatory, fetish ceremony or cults, black magic and charms.</li>
-                <li>Cigarette or tobacco smoking, snuffing, and consumption of any form of alcohol that can intoxicate is strictly forbidden.</li>
-                <li>Consumption of pork or any food offered as sacrifice to idols is forbidden.</li>
-                <li>Members are forbidden to wear apparels made of black or red materials except for professional reasons.</li>
-                <li>Members should not wear shoes when wearing their sutana (garment) or within the premises of the Church.</li>
-                <li>Only white candles are to be used. Coloured candles are strictly forbidden.</li>
-                <li>Fornication and adultery are forbidden. Holy is the Celestial Church of Christ and all who worship in her should endeavour to be clean in body and in soul.</li>
-              </ul>
+          <!-- Tenets Section -->
+          <div v-if="settings.about_tenets?.length" id="tenets" class="scroll-mt-32">
+            <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
+              <span class="text-cfGold text-sm font-semibold">Our Faith</span>
             </div>
-          </div>
-
-          <div id="sacraments">
-            <h2 class="text-3xl font-display font-bold text-royalBlue mb-6">Holy Rites & Sacraments</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="border border-gray-200 p-6 rounded-xl">
-                <h3 class="font-bold text-xl text-royalBlue mb-2">Baptism</h3>
-                <p class="text-gray-600 text-sm">Baptism is by immersion. Before being accepted as a member of the Church, one must be baptised into the faith of Celestial Church of Christ.</p>
-              </div>
-              <div class="border border-gray-200 p-6 rounded-xl">
-                <h3 class="font-bold text-xl text-royalBlue mb-2">Holy Communion</h3>
-                <p class="text-gray-600 text-sm">Held quarterly, as well as on Holy Thursday (Pre-Easter), and on Christmas Day at the Porto Novo Beach.</p>
-              </div>
-              <div class="border border-gray-200 p-6 rounded-xl">
-                <h3 class="font-bold text-xl text-royalBlue mb-2">Annual Washing of Feet</h3>
-                <p class="text-gray-600 text-sm">Held on the Thursday of Holy Week (Passion Week) in commemoration of Jesus Christ washing the feet of His disciples.</p>
-              </div>
-              <div class="border border-gray-200 p-6 rounded-xl">
-                <h3 class="font-bold text-xl text-royalBlue mb-2">Annual Harvest</h3>
-                <p class="text-gray-600 text-sm">Celebrated in two parts: Juvenile Harvest (first Sunday in June) and Adult Harvest Thanksgiving Service.</p>
+            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Tenets & Mode of Worship</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div v-for="(tenet, index) in settings.about_tenets" :key="index" class="bg-white p-6 rounded-2xl border border-warmGray-100 flex items-start space-x-4 hover:shadow-md hover:border-cfTeal/20 transition-all duration-300 group">
+                <div class="w-8 h-8 rounded-full bg-cfTeal/10 flex items-center justify-center shrink-0 group-hover:bg-cfTeal/20 transition-colors">
+                  <svg class="w-4 h-4 text-cfTeal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <span class="text-warmGray-700 leading-relaxed text-sm">{{ tenet }}</span>
               </div>
             </div>
           </div>
 
-          <div id="structure">
-            <h2 class="text-3xl font-display font-bold text-royalBlue mb-6">Church Structure</h2>
-            <div class="prose prose-lg text-gray-600 max-w-none">
-              <p>The Celestial Church of Christ is one and indivisible with its Supreme Headquarters in Porto Novo, Republic of Benin and the International Headquarters at Mission House, Ketu, Lagos State.</p>
-              <p>The <strong>Pastor</strong> is the ultimate Spiritual Head of the Church world-wide, vested with the sole ultimate and unchallengeable authority on all matters affecting Church life. The hierarchy descends from the Pastor to the Diocese, Districts, and individual Parishes.</p>
+          <!-- Sacraments Section -->
+          <div v-if="settings.about_rites?.length" id="sacraments" class="scroll-mt-32">
+            <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
+              <span class="text-cfTeal text-sm font-semibold">Sacred Rites</span>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Holy Rites & Sacraments</h2>
+            <div class="space-y-4">
+              <div v-for="(rite, index) in settings.about_rites" :key="index" class="bg-warmGray-900 text-white p-8 rounded-3xl hover:shadow-xl hover:shadow-warmGray-900/20 transition-all duration-300 group">
+                <h3 class="font-display font-bold text-xl text-cfGold mb-3 group-hover:text-cfTeal transition-colors">{{ rite.name }}</h3>
+                <p class="text-warmGray-400 leading-relaxed whitespace-pre-wrap">{{ rite.description }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Structure Section -->
+          <div v-if="settings.about_churchStructure" id="structure" class="scroll-mt-32">
+            <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
+              <span class="text-cfGold text-sm font-semibold">Organization</span>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Church Structure</h2>
+            <div class="bg-white p-8 md:p-10 rounded-3xl border border-warmGray-100 shadow-sm">
+              <div class="prose prose-lg prose-warmGray max-w-none" v-html="settings.about_churchStructure"></div>
             </div>
           </div>
 
@@ -86,3 +100,9 @@
     </section>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useSettings } from '~/composables/useSettings';
+
+const { settings, pending } = useSettings();
+</script>

@@ -1,31 +1,102 @@
 <template>
-  <div>
-    <section class="bg-royalBlue text-white py-20">
-      <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Gallery</h1>
-        <p class="text-lg md:text-xl font-light max-w-2xl mx-auto">Explore moments from our worship sessions, conferences, medical outreach, and fellowship activities.</p>
+  <div class="bg-ivory overflow-hidden">
+    <!-- Hero Section -->
+    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+      <HeroSection :settings="settings" pageKey="gallery">
+        <!-- <template #fallback>
+          <img src="~/assets/image/hero_gallery.png" alt="Gallery" class="absolute min-w-full min-h-full object-cover" />
+        </template> -->
+      </HeroSection>
+      
+      <div class="relative z-10 text-center px-6 animate-fade-in-up max-w-4xl">
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
+          <span class="text-sm font-medium text-white/90 tracking-wide">Photo Gallery</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-display font-medium mb-4 text-white">Moments & Memories</h1>
+        <p class="text-lg text-white/70 max-w-xl mx-auto">
+          Capturing the beautiful moments of worship, fellowship, and community.
+        </p>
       </div>
     </section>
 
-    <section class="py-16 bg-gray-50">
-      <div class="container mx-auto px-6">
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-          <button class="bg-white border border-gray-200 px-6 py-2 rounded-full text-sm font-medium hover:bg-skyBlue hover:text-white transition">All</button>
-          <button class="bg-white border border-gray-200 px-6 py-2 rounded-full text-sm font-medium hover:bg-skyBlue hover:text-white transition">Worship</button>
-          <button class="bg-white border border-gray-200 px-6 py-2 rounded-full text-sm font-medium hover:bg-skyBlue hover:text-white transition">Conferences</button>
-          <button class="bg-white border border-gray-200 px-6 py-2 rounded-full text-sm font-medium hover:bg-skyBlue hover:text-white transition">Medical Outreach</button>
-          <button class="bg-white border border-gray-200 px-6 py-2 rounded-full text-sm font-medium hover:bg-skyBlue hover:text-white transition">Fellowship Activities</button>
+    <!-- Content Section -->
+    <section class="container mx-auto px-6 py-20">
+      <div v-if="pending" class="flex justify-center py-20">
+        <div class="flex flex-col items-center">
+          <div class="h-12 w-12 border-4 border-cfTeal border-t-transparent rounded-full animate-spin mb-4"></div>
+          <div class="text-warmGray-400 font-medium">Loading gallery...</div>
         </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <div v-for="i in 12" :key="i" class="aspect-square bg-gray-200 rounded-lg overflow-hidden group relative cursor-pointer">
-            <div class="absolute inset-0 bg-royalBlue/0 group-hover:bg-royalBlue/40 transition flex items-center justify-center">
-              <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition transform scale-50 group-hover:scale-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+      </div>
+      
+      <div v-else-if="photos.length === 0" class="text-center bg-white rounded-3xl border border-warmGray-100 py-20 text-warmGray-500 text-lg font-medium shadow-sm">
+        No photos available at this time.
+      </div>
+      
+      <div v-else>
+        <!-- Masonry Grid Approach -->
+        <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
+          <div 
+            v-for="(photo, index) in photos" 
+            :key="index"
+            class="break-inside-avoid group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/10 transition-all duration-500 bg-warmGray-100 border border-warmGray-200 cursor-pointer"
+          >
+            <img 
+              :src="photo.url" 
+              :alt="photo.caption || 'Gallery Image'" 
+              class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
+            />
+            <!-- Glassmorphic overlay -->
+            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+            
+            <div class="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+              <div class="flex items-center justify-between">
+                <p v-if="photo.caption" class="text-white text-sm font-medium pr-4 leading-snug">{{ photo.caption }}</p>
+                <div class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+                </div>
+              </div>
             </div>
-            <div class="w-full h-full flex items-center justify-center text-gray-400">Image {{i}}</div>
           </div>
         </div>
       </div>
     </section>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
+import { useRuntimeConfig } from '#imports';
+import { useSettings } from '~/composables/useSettings';
+
+const { settings } = useSettings();
+
+const pending = ref(true);
+const albums = ref<any[]>([]);
+
+const photos = computed(() => {
+  // Aggregate photos from all albums
+  let allPhotos: any[] = [];
+  albums.value.forEach(album => {
+    if (album.photos && Array.isArray(album.photos)) {
+      allPhotos = [...allPhotos, ...album.photos];
+    }
+  });
+  return allPhotos;
+});
+
+onMounted(async () => {
+  const config = useRuntimeConfig();
+  const apiBase = config.public.apiBase || 'http://localhost:3005/api';
+
+  try {
+    const res = await fetch(`${apiBase}/gallery`);
+    const json = await res.json();
+    albums.value = json.data || json || [];
+  } catch (error) {
+    console.error('Failed to fetch gallery:', error);
+  } finally {
+    pending.value = false;
+  }
+});
+</script>
