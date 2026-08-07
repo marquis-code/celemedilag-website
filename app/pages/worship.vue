@@ -10,7 +10,7 @@
         <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
           <span class="text-sm font-medium text-white/90 tracking-wide">Worship & Service</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Worship & Service</h1>
+        <h1 class="text-xl md:text-lg font-display font-medium leading-tight mb-4">Worship & Service</h1>
         <p class="text-lg text-white/70 max-w-xl mx-auto">Explore the detailed service guides and sacred hymns of the Celestial Church of Christ.</p>
       </div>
     </section>
@@ -26,7 +26,7 @@
             <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfTeal text-sm font-semibold">Service Guide</span>
             </div>
-            <h2 class="text-3xl font-display font-bold text-warmGray-900">Order of Services</h2>
+            <h2 class="text-lg font-display font-bold text-warmGray-900">Order of Services</h2>
             <p class="text-warmGray-500 text-sm mt-2">Detailed step-by-step guides</p>
           </div>
           
@@ -50,7 +50,7 @@
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfGold text-sm font-semibold">Sacred Music</span>
             </div>
-            <h2 class="text-3xl font-display font-bold text-warmGray-900">Sacred Hymns</h2>
+            <h2 class="text-lg font-display font-bold text-warmGray-900">Sacred Hymns</h2>
             <p class="text-warmGray-500 text-sm mt-2">Divinely revealed hymns in Yoruba & English</p>
           </div>
 

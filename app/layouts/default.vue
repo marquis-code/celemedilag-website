@@ -135,7 +135,7 @@
           <div class="text-sm">
             <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Info</h4>
             <p class="mb-2 text-warmGray-500">&copy; {{ new Date().getFullYear() }} CELEMEDILAG.</p>
-            <p class="text-warmGray-500">Built with ♥ by <span class="text-cfGold font-medium">Marquis</span></p>
+            <!-- <p class="text-warmGray-500">Built with ♥ by <span class="text-cfGold font-medium">Marquis</span></p> -->
           </div>
         </div>
       </div>

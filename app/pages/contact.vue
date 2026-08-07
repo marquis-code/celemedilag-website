@@ -10,7 +10,7 @@
         <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
           <span class="text-sm font-medium text-white/90 tracking-wide">Contact & Partner</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Contact & Partner</h1>
+        <h1 class="text-xl md:text-lg font-display font-medium leading-tight mb-4">Contact & Partner</h1>
         <p class="text-lg text-white/70 max-w-xl mx-auto">Get in touch with us or submit a partnership request.</p>
       </div>
     </section>
@@ -24,7 +24,7 @@
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-6">
               <span class="text-cfGold text-sm font-semibold">Reach Us</span>
             </div>
-            <h2 class="text-3xl font-display font-bold mb-8 text-white">Get In Touch</h2>
+            <h2 class="text-lg font-display font-bold mb-8 text-white">Get In Touch</h2>
             <ul class="space-y-6">
               <li class="flex items-start space-x-4">
                 <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center shrink-0">
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                   <h3 class="font-semibold text-base text-white mb-1">Email Us</h3>
-                  <p class="text-warmGray-400 text-sm">{{ settings.email || 'info@celemedilag.org' }}</p>
+                  <a class="text-warmGray-400 text-sm" href="mailto:{{ settings.email || 'info@celemedilag.org' }}">{{ settings.email || 'info@celemedilag.org' }}</a>
                 </div>
               </li>
             </ul>
@@ -52,7 +52,7 @@
             <div class="w-14 h-14 rounded-2xl bg-cfTeal/10 flex items-center justify-center mb-5">
               <svg class="w-7 h-7 text-cfTeal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
             </div>
-            <h2 class="text-xl font-display font-bold text-warmGray-900 mb-2">Partnership Proposal</h2>
+            <h2 class="text-lg font-display font-bold text-warmGray-900 mb-2">Partnership Proposal</h2>
             <p class="text-warmGray-500 text-sm mb-6">{{ settings.contact_partnership || 'Learn more about how you can partner with us to spread the gospel and impact lives.' }}</p>
             <a :href="settings.contact_partnershipLink" target="_blank" download class="bg-cfTeal text-white px-7 py-3 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-cfTeal/30 transition-all flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -66,7 +66,7 @@
           <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
             <span class="text-cfTeal text-sm font-semibold">Message Us</span>
           </div>
-          <h2 class="text-3xl font-display font-bold text-warmGray-900 mb-8">Send a Message</h2>
+          <h2 class="text-lg font-display font-bold text-warmGray-900 mb-8">Send a Message</h2>
           
           <div v-if="submitSuccess" class="bg-cfTeal/5 text-cfTeal p-8 rounded-2xl text-center border border-cfTeal/20">
             <div class="w-16 h-16 bg-cfTeal/10 rounded-full flex items-center justify-center mx-auto mb-4">

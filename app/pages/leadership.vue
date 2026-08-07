@@ -10,7 +10,7 @@
         <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
           <span class="text-sm font-medium text-white/90 tracking-wide">Our Leadership</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Leadership</h1>
+        <h1 class="text-xl md:text-lg font-display font-medium leading-tight mb-4">Leadership</h1>
         <p class="text-lg text-white/70 max-w-xl mx-auto">Understanding the spiritual ranks, robes, and leadership structure.</p>
       </div>
     </section>
@@ -37,7 +37,7 @@
             <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfTeal text-sm font-semibold">Student Executive</span>
             </div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Student Executive Council</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Student Executive Council</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div v-for="leader in leaders" :key="leader._id" class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/5 transition-all duration-500 group border border-warmGray-100">
                 <div class="h-64 overflow-hidden relative">
@@ -45,7 +45,7 @@
                   <div class="absolute inset-0 bg-gradient-to-t from-warmGray-900/80 via-transparent to-transparent"></div>
                   <div class="absolute bottom-4 left-5 right-5">
                     <div class="inline-flex bg-cfGold text-warmGray-900 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">{{ leader.position }}</div>
-                    <h3 class="text-xl font-display font-bold text-white">{{ leader.name }}</h3>
+                    <h3 class="text-lg font-display font-bold text-white">{{ leader.name }}</h3>
                   </div>
                 </div>
                 <div class="p-6">
@@ -63,7 +63,7 @@
           <!-- Male Line -->
           <div v-if="settings.leadership_male?.length" id="male" class="scroll-mt-32">
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4"><span class="text-cfGold text-sm font-semibold">Hierarchy</span></div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Male Leadership Line</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Male Leadership Line</h2>
             <div class="space-y-3">
               <div v-for="(item, index) in settings.leadership_male" :key="index" class="bg-white p-6 rounded-2xl border border-warmGray-100 flex flex-col md:flex-row md:items-center gap-4 hover:border-cfGold/30 hover:shadow-md transition-all duration-300">
                 <div class="font-display font-bold text-lg text-cfTeal w-48 shrink-0">{{ item.rank }}</div>
@@ -75,7 +75,7 @@
           <!-- Female Line -->
           <div v-if="settings.leadership_female?.length" id="female" class="scroll-mt-32">
             <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4"><span class="text-cfTeal text-sm font-semibold">Hierarchy</span></div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Female Leadership Line</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Female Leadership Line</h2>
             <div class="space-y-3">
               <div v-for="(item, index) in settings.leadership_female" :key="index" class="bg-white p-6 rounded-2xl border border-warmGray-100 flex flex-col md:flex-row md:items-center gap-4 hover:border-cfTeal/30 hover:shadow-md transition-all duration-300">
                 <div class="font-display font-bold text-lg text-cfGold w-48 shrink-0">{{ item.rank }}</div>
@@ -87,7 +87,7 @@
           <!-- Prophets -->
           <div v-if="settings.leadership_prophets?.length" id="prophets" class="scroll-mt-32">
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4"><span class="text-cfGold text-sm font-semibold">Spiritual Ranks</span></div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Prophets & Prophetesses</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Prophets & Prophetesses</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="bg-warmGray-900 p-8 rounded-3xl text-white">
                 <h3 class="font-display font-bold text-xl text-cfTeal mb-6 pb-4 border-b border-warmGray-700">Prophets</h3>
@@ -113,7 +113,7 @@
           <!-- Functions -->
           <div v-if="settings.leadership_functions?.length" id="functions" class="scroll-mt-32">
             <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4"><span class="text-cfTeal text-sm font-semibold">Roles</span></div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Functions of Ranks</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Functions of Ranks</h2>
             <div class="bg-white p-8 rounded-3xl border border-warmGray-100 shadow-sm">
               <ul class="space-y-4">
                 <li v-for="(func, index) in settings.leadership_functions" :key="index" class="flex items-start space-x-4 text-warmGray-700">

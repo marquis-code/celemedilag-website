@@ -12,7 +12,7 @@
         <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
           <span class="text-sm font-medium text-white/90 tracking-wide">About CELEMEDILAG</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Our Story</h1>
+        <h1 class="text-xl md:text-lg font-display font-medium leading-tight mb-4">Our Story</h1>
         <p class="text-lg text-white/70 max-w-xl mx-auto">
           Discover the rich history, tenets, and spiritual foundation of CELEMEDILAG.
         </p>
@@ -50,7 +50,7 @@
             <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfTeal text-sm font-semibold">Foundation</span>
             </div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Foundation History</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Foundation History</h2>
             <div class="prose prose-lg prose-warmGray max-w-none bg-white rounded-3xl p-8 md:p-10 border border-warmGray-100 shadow-sm" v-html="settings.about_foundationHistory || '<p class=\'italic text-warmGray-400\'>History content is being updated...</p>'"></div>
           </div>
 
@@ -59,7 +59,7 @@
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfGold text-sm font-semibold">Our Faith</span>
             </div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Tenets & Mode of Worship</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Tenets & Mode of Worship</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div v-for="(tenet, index) in settings.about_tenets" :key="index" class="bg-white p-6 rounded-2xl border border-warmGray-100 flex items-start space-x-4 hover:shadow-md hover:border-cfTeal/20 transition-all duration-300 group">
                 <div class="w-8 h-8 rounded-full bg-cfTeal/10 flex items-center justify-center shrink-0 group-hover:bg-cfTeal/20 transition-colors">
@@ -75,7 +75,7 @@
             <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfTeal text-sm font-semibold">Sacred Rites</span>
             </div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Holy Rites & Sacraments</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Holy Rites & Sacraments</h2>
             <div class="space-y-4">
               <div v-for="(rite, index) in settings.about_rites" :key="index" class="bg-warmGray-900 text-white p-8 rounded-3xl hover:shadow-xl hover:shadow-warmGray-900/20 transition-all duration-300 group">
                 <h3 class="font-display font-bold text-xl text-cfGold mb-3 group-hover:text-cfTeal transition-colors">{{ rite.name }}</h3>
@@ -89,7 +89,7 @@
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfGold text-sm font-semibold">Organization</span>
             </div>
-            <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-8">Church Structure</h2>
+            <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-8">Church Structure</h2>
             <div class="bg-white p-8 md:p-10 rounded-3xl border border-warmGray-100 shadow-sm">
               <div class="prose prose-lg prose-warmGray max-w-none" v-html="settings.about_churchStructure"></div>
             </div>

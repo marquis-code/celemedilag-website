@@ -21,7 +21,7 @@
           <span class="text-sm font-medium text-white/90 tracking-wide">Welcome to CELEMEDILAG</span>
         </div>
         
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-medium leading-[1.1] mb-8 animate-fade-in-up">
+        <h1 class="text-xl md:text-lg lg:text-lg font-display font-medium leading-[1.1] mb-8 animate-fade-in-up">
           {{ settings.heroHeadline || 'Discover a Christian student group on your campus.' }}
         </h1>
         
@@ -56,7 +56,7 @@
           <img v-if="settings.departments_heroImage" :src="settings.departments_heroImage" alt="Students connecting" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <img v-else src="~/assets/image/hero_departments.png" alt="Students connecting" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col items-start justify-end p-10">
-            <h2 class="text-4xl md:text-5xl font-display font-bold mb-3 text-white">Get Connected</h2>
+            <h2 class="text-lg md:text-lg font-display font-bold mb-3 text-white">Get Connected</h2>
             <p class="text-gray-300 text-base max-w-sm mb-6">Find your unit and start serving with other students.</p>
             <NuxtLink to="/departments" class="bg-cfTeal text-white px-6 py-3 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-cfTeal/30 transition-all">
               Explore Departments →
@@ -104,7 +104,7 @@
           <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-2">
             <span class="text-cfTeal text-sm font-semibold tracking-wide">About Us</span>
           </div>
-          <h2 class="text-4xl md:text-5xl font-display font-medium text-warmGray-900 leading-tight">About CELEMEDILAG</h2>
+          <h2 class="text-lg md:text-lg font-display font-medium text-warmGray-900 leading-tight">About CELEMEDILAG</h2>
           <h3 class="text-xl text-warmGray-700 leading-relaxed font-medium">
             {{ settings.vision || 'Equipping students to implement and sustain dynamic campus ministries whose student worship God and change the world.' }}
           </h3>
@@ -134,7 +134,7 @@
             <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
               <span class="text-cfGold text-sm font-semibold tracking-wide">Resources</span>
             </div>
-            <h2 class="text-4xl md:text-5xl font-display font-medium text-warmGray-900">Latest Resources</h2>
+            <h2 class="text-lg md:text-lg font-display font-medium text-warmGray-900">Latest Resources</h2>
           </div>
           <NuxtLink to="/sermons" class="text-cfTeal font-semibold hover:text-cfTeal/80 transition-colors flex items-center group">
             View All
@@ -172,7 +172,7 @@
                 {{ new Date(sermon.date || sermon.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
                 <span v-if="sermon.preacher" class="text-warmGray-400"> · {{ sermon.preacher }}</span>
               </p>
-              <h3 class="text-xl font-display font-bold text-warmGray-900 leading-tight mb-3 group-hover:text-cfTeal transition-colors">
+              <h3 class="text-lg font-display font-bold text-warmGray-900 leading-tight mb-3 group-hover:text-cfTeal transition-colors">
                 {{ sermon.title }} <span v-if="sermon.series" class="text-warmGray-400">| {{ sermon.series }}</span>
               </h3>
               <p class="text-sm text-warmGray-500 line-clamp-2 leading-relaxed">

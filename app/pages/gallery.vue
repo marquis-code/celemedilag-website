@@ -12,7 +12,7 @@
         <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
           <span class="text-sm font-medium text-white/90 tracking-wide">Photo Gallery</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-display font-medium mb-4 text-white">Moments & Memories</h1>
+        <h1 class="text-xl md:text-lg font-display font-medium mb-4 text-white">Moments & Memories</h1>
         <p class="text-lg text-white/70 max-w-xl mx-auto">
           Capturing the beautiful moments of worship, fellowship, and community.
         </p>

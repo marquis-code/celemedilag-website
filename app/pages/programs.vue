@@ -12,7 +12,7 @@
         <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
           <span class="text-sm font-medium text-white/90 tracking-wide">Programs & Events</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-display font-medium leading-tight mb-4">Programs & Events</h1>
+        <h1 class="text-xl md:text-lg font-display font-medium leading-tight mb-4">Programs & Events</h1>
         <p class="text-lg text-white/70 max-w-xl mx-auto">Join us in our daily prayers, weekly services, and special events.</p>
       </div>
     </section>
@@ -32,7 +32,7 @@
         <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
           <span class="text-cfTeal text-sm font-semibold">Coming Up</span>
         </div>
-        <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-10">Upcoming Events</h2>
+        <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-10">Upcoming Events</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div v-for="event in events" :key="event._id" class="flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/5 transition-all duration-500 group border border-warmGray-100">
@@ -43,7 +43,7 @@
               <div class="inline-flex items-center bg-cfGold/10 rounded-full px-3 py-1 w-fit mb-3">
                 <span class="text-cfGold font-semibold text-xs uppercase tracking-wider">{{ new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }} · {{ event.time }}</span>
               </div>
-              <h3 class="text-xl font-display font-bold text-warmGray-900 mb-2">{{ event.title }}</h3>
+              <h3 class="text-lg font-display font-bold text-warmGray-900 mb-2">{{ event.title }}</h3>
               <p class="text-warmGray-500 text-sm line-clamp-2 mb-4">{{ event.description }}</p>
               <div class="flex items-center text-warmGray-400 text-sm">
                 <svg class="w-4 h-4 mr-1.5 text-cfTeal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -59,13 +59,13 @@
         <div class="inline-flex items-center bg-cfGold/10 rounded-full px-4 py-1.5 mb-4">
           <span class="text-cfGold text-sm font-semibold">Weekly Schedule</span>
         </div>
-        <h2 class="text-3xl md:text-4xl font-display font-medium text-warmGray-900 mb-10">Regular Prayer Days</h2>
+        <h2 class="text-xl md:text-lg font-display font-medium text-warmGray-900 mb-10">Regular Prayer Days</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="(prog, index) in settings.programs_regular" :key="index" class="bg-white rounded-3xl p-8 border border-warmGray-100 hover:border-cfGold/30 hover:shadow-lg hover:shadow-black/5 transition-all duration-300 group">
             <div class="w-12 h-12 rounded-2xl bg-cfTeal/10 flex items-center justify-center mb-5 group-hover:bg-cfTeal/20 transition-colors">
               <svg class="w-6 h-6 text-cfTeal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <h3 class="text-xl font-display font-bold text-warmGray-900 mb-1">{{ prog.day }}</h3>
+            <h3 class="text-lg font-display font-bold text-warmGray-900 mb-1">{{ prog.day }}</h3>
             <p class="text-cfTeal font-semibold text-sm mb-4">{{ prog.time }}</p>
             <p class="text-warmGray-500 text-sm leading-relaxed whitespace-pre-wrap">{{ prog.description }}</p>
           </div>
@@ -78,7 +78,7 @@
           <div class="inline-flex items-center bg-cfTeal/10 rounded-full px-4 py-1.5 mb-4">
             <span class="text-cfTeal text-sm font-semibold">Calendar</span>
           </div>
-          <h2 class="text-3xl md:text-4xl font-display font-medium text-white mb-10">Annual Feasts & Services</h2>
+          <h2 class="text-xl md:text-lg font-display font-medium text-white mb-10">Annual Feasts & Services</h2>
           <div class="space-y-4">
             <div v-for="(feast, index) in settings.programs_annual" :key="index" class="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center bg-white/5 hover:bg-white/10 rounded-2xl p-6 transition-colors duration-300">
               <div class="shrink-0 bg-cfGold text-warmGray-900 font-bold text-sm uppercase tracking-wider py-2 px-5 rounded-full text-center min-w-[8rem]">
