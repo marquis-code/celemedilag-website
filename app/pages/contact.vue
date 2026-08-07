@@ -41,7 +41,7 @@
                 </div>
                 <div>
                   <h3 class="font-semibold text-base text-white mb-1">Email Us</h3>
-                  <a class="text-warmGray-400 text-sm" href="mailto:{{ settings.email || 'info@celemedilag.org' }}">{{ settings.email || 'info@celemedilag.org' }}</a>
+                  <a class="text-warmGray-400 text-sm" :href="'mailto:' + (settings.email || 'info@celemedilag.org')">{{ settings.email || 'info@celemedilag.org' }}</a>
                 </div>
               </li>
             </ul>

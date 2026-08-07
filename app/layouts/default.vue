@@ -120,14 +120,14 @@
           <div>
             <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Connect</h4>
             <div class="flex space-x-3">
-              <a href="#" class="w-10 h-10 bg-warmGray-800 rounded-xl flex items-center justify-center hover:bg-cfTeal hover:text-white hover:shadow-lg hover:shadow-cfTeal/20 transition-all duration-300">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg>
-              </a>
-              <a href="#" class="w-10 h-10 bg-warmGray-800 rounded-xl flex items-center justify-center hover:bg-cfTeal hover:text-white hover:shadow-lg hover:shadow-cfTeal/20 transition-all duration-300">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg>
-              </a>
-              <a href="#" class="w-10 h-10 bg-warmGray-800 rounded-xl flex items-center justify-center hover:bg-cfTeal hover:text-white hover:shadow-lg hover:shadow-cfTeal/20 transition-all duration-300">
+              <a v-if="settings?.instagram" :href="settings.instagram" target="_blank" class="w-10 h-10 bg-warmGray-800 rounded-xl flex items-center justify-center hover:bg-cfTeal hover:text-white hover:shadow-lg hover:shadow-cfTeal/20 transition-all duration-300">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+              </a>
+              <a v-if="settings?.tiktok" :href="settings.tiktok" target="_blank" class="w-10 h-10 bg-warmGray-800 rounded-xl flex items-center justify-center hover:bg-cfTeal hover:text-white hover:shadow-lg hover:shadow-cfTeal/20 transition-all duration-300">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.12-3.44-3.17-3.61-5.66-.21-3.11 2.05-6.04 5.08-6.62 1.05-.2 2.12-.17 3.16.09.02.02.04.05.05.07v4.06c-1.09-.34-2.31-.22-3.32.32-1.15.63-1.87 1.88-1.85 3.24.03 1.06.66 2.07 1.59 2.53 1.15.56 2.6.49 3.65-.24.78-.54 1.25-1.45 1.28-2.43.05-3.32.02-6.63.02-9.95.02-2.73.01-5.46.01-8.2z"></path></svg>
+              </a>
+              <a v-if="settings?.youtube" :href="settings.youtube" target="_blank" class="w-10 h-10 bg-warmGray-800 rounded-xl flex items-center justify-center hover:bg-cfTeal hover:text-white hover:shadow-lg hover:shadow-cfTeal/20 transition-all duration-300">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.582 6.186c-.23-.86-.908-1.538-1.768-1.768-1.56-.418-7.814-.418-7.814-.418s-6.254 0-7.814.418c-.86.23-1.538.908-1.768 1.768-.418 1.56-.418 4.814-.418 4.814s0 3.254.418 4.814c.23.86.908 1.538 1.768 1.768 1.56.418 7.814.418 7.814.418s6.254 0 7.814-.418c.86-.23 1.538-.908 1.768-1.768.418-1.56.418-4.814.418-4.814s0-3.254-.418-4.814zm-11.582 7.814v-6l5.5 3-5.5 3z"></path></svg>
               </a>
             </div>
           </div>
@@ -155,7 +155,7 @@ import { useSettings } from '~/composables/useSettings';
 const isScrolled = ref(false);
 const mobileMenuOpen = ref(false);
 
-const { fetchSettings, setupWatcher } = useSettings();
+const { settings, fetchSettings, setupWatcher } = useSettings();
 
 onMounted(() => {
   fetchSettings();
