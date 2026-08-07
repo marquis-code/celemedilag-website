@@ -57,9 +57,9 @@
           <NuxtLink to="/contact" class="bg-cfTeal text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-cfTeal/90 hover:shadow-lg hover:shadow-cfTeal/25 transition-all duration-300">
             Get Involved
           </NuxtLink>
-          <a href="http://localhost:3002" target="_blank" class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300" :class="isScrolled ? 'text-warmGray-400 hover:bg-warmGray-100 hover:text-warmGray-700' : 'text-white/60 hover:bg-white/10 hover:text-white'">
+          <!-- <a href="https://celemedilag-admin.onrender.com/login" target="_blank" class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300" :class="isScrolled ? 'text-warmGray-400 hover:bg-warmGray-100 hover:text-warmGray-700' : 'text-white/60 hover:bg-white/10 hover:text-white'">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-          </a>
+          </a> -->
         </div>
         
         <!-- Mobile Menu Toggle -->
