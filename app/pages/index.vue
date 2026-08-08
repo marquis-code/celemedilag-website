@@ -1,7 +1,7 @@
 <template>
   <div class="bg-ivory overflow-hidden">
 
-    <section class="relative h-[90vh] min-h-[650px] flex items-center justify-center text-white">
+    <section class="relative w-full h-screen flex items-center justify-center text-white">
 
       <HeroSection 
         :settings="settings" 
@@ -9,7 +9,7 @@
         customHeroImageKey="heroImage"
       >
         <template #fallback>
-          <video autoplay loop muted playsinline class="absolute min-w-full min-h-full object-cover">
+          <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-audience-in-a-concert-with-hands-up-4444-large.mp4" type="video/mp4" />
           </video>
         </template>

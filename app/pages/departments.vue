@@ -1,10 +1,10 @@
 <template>
   <div class="bg-ivory overflow-hidden">
     <!-- Hero -->
-    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+    <section class="relative w-full h-screen flex items-center justify-center text-white">
       <HeroSection :settings="settings" pageKey="departments">
         <template #fallback>
-          <img src="~/assets/image/hero_departments.png" alt="Departments" class="absolute min-w-full min-h-full object-cover" />
+          <img src="~/assets/image/hero_departments.png" alt="Departments" class="absolute inset-0 w-full h-full object-cover" />
         </template>
       </HeroSection>
       

@@ -1,9 +1,9 @@
 <template>
   <div class="bg-ivory overflow-hidden">
-    <section class="relative h-[55vh] min-h-[400px] flex items-center justify-center text-white">
+    <section class="relative w-full h-screen flex items-center justify-center text-white">
       <HeroSection :settings="settings" pageKey="sermons">
         <template #fallback>
-          <img src="~/assets/image/hero_sermons.png" alt="Sermons" class="absolute min-w-full min-h-full object-cover" />
+          <img src="~/assets/image/hero_sermons.png" alt="Sermons" class="absolute inset-0 w-full h-full object-cover" />
         </template>
       </HeroSection>
       <div class="relative z-10 container mx-auto px-6 text-center max-w-4xl animate-fade-in-up">
