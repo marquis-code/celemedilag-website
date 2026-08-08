@@ -4,7 +4,7 @@
     <div v-if="heroType === 'carousel' && carouselImages.length > 0" class="absolute inset-0 w-full h-full">
       <TransitionGroup name="fade">
         <div v-for="(img, index) in carouselImages" :key="img" v-show="currentIndex === index" class="absolute inset-0 w-full h-full">
-          <img :src="img" class="absolute inset-0 w-full h-full object-contain" alt="Hero background carousel" />
+          <img :src="img" class="absolute inset-0 w-full h-full object-cover" alt="Hero background carousel" />
         </div>
       </TransitionGroup>
       
@@ -22,7 +22,7 @@
     </div>
     
     <!-- Single Image Mode -->
-    <img v-else-if="singleImage" :src="singleImage" class="absolute inset-0 w-full h-full object-contain" alt="Hero background" />
+    <img v-else-if="singleImage" :src="singleImage" class="absolute inset-0 w-full h-full object-cover" alt="Hero background" />
 
     <!-- Fallback -->
     <slot v-else name="fallback"></slot>
